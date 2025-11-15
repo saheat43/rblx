@@ -16,7 +16,7 @@ local scriptToLoad = [[
     local AUTO_CHAT_ENABLED = false
     local JUMP_INTERVAL = 2         -- seconds between jumps
     local CHAT_INTERVAL = 5         -- seconds between chat messages
-    local CHAT_MESSAGE = "Hello, Roblox!"  -- the message to send
+    local CHAT_MESSAGE = "Hello, donate to the homeless!"  -- the message to send
     local toggleKey = Enum.KeyCode.F  -- Press F to toggle the features on/off
 
     --// Auto Jump Function
