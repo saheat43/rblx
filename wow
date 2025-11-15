@@ -1,27 +1,26 @@
 -- Loadstring version of the script
 local scriptToLoad = [[
-    --// Auto Jump + Auto Chat Script
+    --// Auto Jump + Auto Chat Script with Toggle
     --// Safe for use in your own Roblox Studio games
 
     local Players = game:GetService("Players")
     local ChatService = game:GetService("Chat")
+    local UserInputService = game:GetService("UserInputService")
 
     local player = Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
 
     --// SETTINGS
-    local AUTO_JUMP_ENABLED = true
-    local AUTO_CHAT_ENABLED = true
+    local AUTO_JUMP_ENABLED = false
+    local AUTO_CHAT_ENABLED = false
     local JUMP_INTERVAL = 2         -- seconds between jumps
     local CHAT_INTERVAL = 5         -- seconds between chat messages
-    local CHAT_MESSAGE = "Hello, donate if you got spare change!"  -- the message to send
+    local CHAT_MESSAGE = "Hello, Roblox!"  -- the message to send
+    local toggleKey = Enum.KeyCode.F  -- Press F to toggle the features on/off
 
     --// Auto Jump Function
     local function autoJump()
-        while AUTO_JUMP_ENABLED do
-            if humanoid and humanoid.Health > 0 then
-                -- Make sure the humanoid is not already in a state that prevents jumping (like falling or swimming)
-                if humanoid:GetState() == Enum.HumanoidStateType.Physics or humanoid:GetState() == Enum.HumanoidStateType.Seated then
-                    humanoid:ChangeState(Enum.HumanoidStateType.Physics)  -- Reset humanoid state to ensure we can jump
-                    humanoid.Jump =
+        while true do
+            if AUTO_JUMP_ENABLED then
+                if humanoid and humanoid.Health > 0 t
