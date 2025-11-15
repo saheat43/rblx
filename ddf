@@ -2,7 +2,6 @@
 
 local Players = game:GetService("Players")
 local ChatService = game:GetService("Chat")
-local HttpService = game:GetService("HttpService")
 
 -- Player and character setup
 local player = Players.LocalPlayer
@@ -44,13 +43,14 @@ local function autoJump()
     while true do
         if AUTO_JUMP_ENABLED then
             if humanoid and humanoid.Health > 0 then
+                -- Check if humanoid is in a valid state for jumping
                 if humanoid:GetState() == Enum.HumanoidStateType.Physics or humanoid:GetState() == Enum.HumanoidStateType.Seated then
-                    humanoid:ChangeState(Enum.HumanoidStateType.Physics)
-                    humanoid.Jump = true
+                    humanoid:ChangeState(Enum.HumanoidStateType.Physics)  -- Reset humanoid state to allow jumping
+                    humanoid.Jump = true  -- Trigger the jump
                 end
             end
         end
-        wait(JUMP_INTERVAL)
+        wait(JUMP_INTERVAL)  -- Wait for the next jump interval
     end
 end
 
@@ -62,8 +62,38 @@ local function autoChat()
                 ChatService:Chat(player.Character, CHAT_MESSAGE, Enum.ChatColor.Blue)
             end
         end
-        wait(CHAT_INTERVAL)
+        wait(CHAT_INTERVAL)  -- Wait for the next chat interval
     end
 end
 
--- Button Fu
+-- Button Functionality: Toggle Auto Jump
+primaryButton.MouseButton1Click:Connect(function()
+    AUTO_JUMP_ENABLED = not AUTO_JUMP_ENABLED  -- Toggle Auto Jump
+    if AUTO_JUMP_ENABLED then
+        primaryButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)  -- Red when activated
+        primaryButton.Text = "Deactivate Auto Jump"
+        print("Auto Jump Activated")
+    else
+        primaryButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Blue when deactivated
+        primaryButton.Text = "Activate Auto Jump"
+        print("Auto Jump Deactivated")
+    end
+end)
+
+-- Button Functionality: Toggle Auto Chat
+secondaryButton.MouseButton1Click:Connect(function()
+    AUTO_CHAT_ENABLED = not AUTO_CHAT_ENABLED  -- Toggle Auto Chat
+    if AUTO_CHAT_ENABLED then
+        secondaryButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)  -- Red when activated
+        secondaryButton.Text = "Deactivate Auto Chat"
+        print("Auto Chat Activated")
+    else
+        secondaryButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)  -- White when deactivated
+        secondaryButton.Text = "Activate Auto Chat"
+        print("Auto Chat Deactivated")
+    end
+end)
+
+-- Start the Auto Jump and Auto Chat in separate threads
+task.spawn(autoJump)
+task.spawn(autoChat)
