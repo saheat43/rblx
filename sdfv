@@ -1,0 +1,69 @@
+-- Load and execute the Lua script for auto-jumping and auto-chat with UI buttons
+
+local Players = game:GetService("Players")
+local ChatService = game:GetService("Chat")
+local HttpService = game:GetService("HttpService")
+
+-- Player and character setup
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- SETTINGS
+local AUTO_JUMP_ENABLED = false
+local AUTO_CHAT_ENABLED = false
+local JUMP_INTERVAL = 2         -- seconds between jumps
+local CHAT_INTERVAL = 5         -- seconds between chat messages
+local CHAT_MESSAGE = "Hello, Donate If you have spare change !"  -- the message to send
+
+-- Create UI elements (Button to toggle Auto Jump and Auto Chat)
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+screenGui.Name = "AutoJumpChatUI"
+
+-- Primary Button for Auto Jump
+local primaryButton = Instance.new("TextButton")
+primaryButton.Size = UDim2.new(0, 200, 0, 50)
+primaryButton.Position = UDim2.new(0, 50, 0, 50)
+primaryButton.Text = "Toggle Auto Jump"
+primaryButton.BackgroundColor3 = Color3.fromRGB(0, 0, 255)  -- Blue
+primaryButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+primaryButton.Parent = screenGui
+
+-- Secondary Button for Auto Chat
+local secondaryButton = Instance.new("TextButton")
+secondaryButton.Size = UDim2.new(0, 200, 0, 50)
+secondaryButton.Position = UDim2.new(0, 50, 0, 150)
+secondaryButton.Text = "Toggle Auto Chat"
+secondaryButton.BackgroundColor3 = Color3.fromRGB(255, 255, 255)  -- White
+secondaryButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+secondaryButton.Parent = screenGui
+
+-- Auto Jump Function
+local function autoJump()
+    while true do
+        if AUTO_JUMP_ENABLED then
+            if humanoid and humanoid.Health > 0 then
+                if humanoid:GetState() == Enum.HumanoidStateType.Physics or humanoid:GetState() == Enum.HumanoidStateType.Seated then
+                    humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+                    humanoid.Jump = true
+                end
+            end
+        end
+        wait(JUMP_INTERVAL)
+    end
+end
+
+-- Auto Chat Function
+local function autoChat()
+    while true do
+        if AUTO_CHAT_ENABLED then
+            if player.Character then
+                ChatService:Chat(player.Character, CHAT_MESSAGE, Enum.ChatColor.Blue)
+            end
+        end
+        wait(CHAT_INTERVAL)
+    end
+end
+
+-- Button Fu
