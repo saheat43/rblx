@@ -15,30 +15,13 @@ local scriptToLoad = [[
     local AUTO_CHAT_ENABLED = true
     local JUMP_INTERVAL = 2         -- seconds between jumps
     local CHAT_INTERVAL = 5         -- seconds between chat messages
-    local CHAT_MESSAGE = "Hello, Roblox!"  -- the message to send
+    local CHAT_MESSAGE = "Hello, donate if you got spare change!"  -- the message to send
 
-    --// AUTO JUMP FUNCTION
-    task.spawn(function()
-        if AUTO_JUMP_ENABLED then
-            while task.wait(JUMP_INTERVAL) do
-                if humanoid and humanoid.Health > 0 then
-                    humanoid.Jump = true
-                end
-            end
-        end
-    end)
-
-    --// AUTO CHAT FUNCTION
-    task.spawn(function()
-        if AUTO_CHAT_ENABLED then
-            while task.wait(CHAT_INTERVAL) do
-                if player.Character then
-                    ChatService:Chat(player.Character, CHAT_MESSAGE, Enum.ChatColor.Blue)
-                end
-            end
-        end
-    end)
-]]
-
--- Execute the loadstring
-loadstring(scriptToLoad)()
+    --// Auto Jump Function
+    local function autoJump()
+        while AUTO_JUMP_ENABLED do
+            if humanoid and humanoid.Health > 0 then
+                -- Make sure the humanoid is not already in a state that prevents jumping (like falling or swimming)
+                if humanoid:GetState() == Enum.HumanoidStateType.Physics or humanoid:GetState() == Enum.HumanoidStateType.Seated then
+                    humanoid:ChangeState(Enum.HumanoidStateType.Physics)  -- Reset humanoid state to ensure we can jump
+                    humanoid.Jump =
