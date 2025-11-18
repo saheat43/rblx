@@ -13,7 +13,7 @@ local AUTO_JUMP_ENABLED = false
 local AUTO_CHAT_ENABLED = false
 local JUMP_INTERVAL = 2         -- seconds between jumps
 local CHAT_INTERVAL = 5         -- seconds between chat messages
-local CHAT_MESSAGE = "Hello, Donate If you have spare change !"  -- the message to send
+local CHAT_MESSAGE = "just afk im not even typing  !"  -- the message to send
 
 -- Create UI elements (Button to toggle Auto Jump and Auto Chat)
 local screenGui = Instance.new("ScreenGui")
